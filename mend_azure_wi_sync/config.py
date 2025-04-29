@@ -55,7 +55,7 @@ class varenvs(Enum):  # Lit of Env.variables
 
 class Tags(Enum):
     license = ("LICENSE","license policy violation")
-    vul_score = ("VULNERABILITY_SCORE","security vulnerability")
+    vul_score = ("VULNERABILITY_SCORE","FoundByMend")
     vul_severity = ("VULNERABILITY_SEVERITY","security vulnerability")
     lib_age = ("LIBRARY_STALENESS","outdated library")
     regex = ("RESOURCE_NAME_REGEX","resource name template")
