@@ -139,6 +139,7 @@ def set_lastrun(lastrun: str):
 
         r, errorcode = call_azure_api(api_type="PATCH", api="projects/{" + azure_prj_id + "}/properties", data=data,
                                       version="7.0-preview")
+        logger.info(r)
         if errorcode > 0:
             info_el = r.pop()
             logger.error(f"[{fn()}] {info_el}")
