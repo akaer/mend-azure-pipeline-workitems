@@ -861,7 +861,7 @@ def create_wi(prj_token: str, sdate: str, edate: str, cstm_flds: list, wi_type: 
                                            try_or_error(lambda: x["vulnerability"]["score"], 0))))
                         max_severity = try_or_error(lambda: max_severity_el["vulnerability"]["cvss3_score"],
                                                     try_or_error(lambda: max_severity_el["vulnerability"]["score"], ""))
-                vul_title = f"License Policy Violation detected in {lib_name}" if is_license else f"{lib_name}: " \
+                vul_title = f"License Policy Violation detected in {lib_name}" if is_license else f"Mend: {lib_name}: " \
                                         f"{len(relevant_vuls)} vulnerabilities (highest severity is {max_severity})"
                 hierarchy_libs = ""
                 vulnerability_data = ""
