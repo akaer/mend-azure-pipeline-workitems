@@ -554,14 +554,15 @@ def create_wi(prj_token: str, sdate: str, edate: str, cstm_flds: list, wi_type: 
                        try_or_error(lambda: location_['locations'][0]['path'], "")
         return "", ""
 
-    def set_priority(value: float):
-        score = [70, 55, 40]  # Mend gradation of SCC scores
-        z = value * 10
-        i = 0
-        for i, sc_ in enumerate(score):
-            if z // sc_ == 1:
-                break
-        return i + 1
+    def set_priority(value: float) -> int:
+        if value >= 9.0:
+            return 1  # Critical
+        elif value >= 7.0:
+            return 2  # High
+        elif value >= 4.0:
+            return 3  # Medium
+        else:
+            return 4  # Low
 
     def analyze_fields(fld: dict, prj: list):
         val = ""
@@ -697,6 +698,11 @@ def create_wi(prj_token: str, sdate: str, edate: str, cstm_flds: list, wi_type: 
 
     def create_wi_content(issue_id):
         global data, count_item, global_errors
+        severity_mapping = {1: "1 - Critical",
+                            2: "2 - High",
+                            3: "3 - Medium",
+                            4: "4 - Low"
+                            }
         data = [
             {
                 "op": azure_operation,
@@ -713,6 +719,11 @@ def create_wi(prj_token: str, sdate: str, edate: str, cstm_flds: list, wi_type: 
                 "path": "/fields/System.Tags",
                 "value": ",".join(tags)
             },
+            {
+                "op": azure_operation,
+                "path": "/fields/Microsoft.VSTS.Common.Severity",
+                "value": severity_mapping.get(priority, "3 - Medium")
+            }
         ]
         if conf.description == "Description":
             desc_field = "/fields/System.Description"
